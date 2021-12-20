@@ -13,7 +13,7 @@
 #' @import lars 
 #' @export
 #' @examples 
-#' data = TempDisaggDGP(n_l = 10, m = 4, p = 4, beta = 0.5, sparsity = 0.5, method = 'Chow-Lin', aggMat = 'sum', mean_X = 0, sd_X = 1, sd_e = 1 , rho = 0.5)
+#' data = TempDisaggDGP(n_l = 50, m = 4, p = 10, beta = 3, sparsity = 0.5, method = 'Chow-Lin', rho = 0.5)
 #' X = data$X_Gen
 #' Y = data$Y_Gen
 #' fit_spTD = SparseTD(Y = Y, X = X, penalty = 'lasso', aggMat = 'sum')
