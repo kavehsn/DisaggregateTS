@@ -21,7 +21,7 @@
 #' @import zoo
 #' @export
 #' @examples
-#' data = TempDisaggDGP(n_l = 10, m = 4, p = 4, method = 'Chow-Lin', aggMat = 'sum', mean_X = 0, sd_X = 1, sd_e = 1 , rho = 0.5)
+#' data = TempDisaggDGP(n_l = 50, m = 4, p = 4, method = 'Chow-Lin', rho = 0.5)
 #' X = data$X_Gen
 #' Y = data$Y_Gen
 #' @references
@@ -29,7 +29,7 @@
 #' @importFrom Rdpack reprompt
 #' @importFrom stats lm rbinom rnorm
 
-TempDisaggDGP <- function(n_l, m, p = 1, beta = 0.5, sparsity = 1, method = 'Denton-Cholette', aggMat = 'sum', rho = 0, mean_X = 0.5, sd_X = 1, sd_e = 1, simul = FALSE){
+TempDisaggDGP <- function(n_l, m, p = 1, beta = 1, sparsity = 1, method = 'Denton-Cholette', aggMat = 'sum', rho = 0, mean_X = 0, sd_X = 1, sd_e = 1, simul = FALSE){
 
 
 	if(rho >= 1 || rho <= -1){
