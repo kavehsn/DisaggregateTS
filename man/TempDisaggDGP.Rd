@@ -2,7 +2,7 @@
 % Please edit documentation in R/TempDisaggDGP.R
 \name{TempDisaggDGP}
 \alias{TempDisaggDGP}
-\title{High and low-frequency data generating processes}
+\title{High and Low-Frequency Data Generating Processes}
 \usage{
 TempDisaggDGP(
   n_l,

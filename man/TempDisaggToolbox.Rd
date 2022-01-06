@@ -2,7 +2,7 @@
 % Please edit documentation in R/TempDisaggToolbox.R
 \name{TempDisaggToolbox}
 \alias{TempDisaggToolbox}
-\title{Low-dimensional temporal dissaggregation toolbox}
+\title{Low-Dimensional Temporal Disaggregation Toolbox}
 \usage{
 TempDisaggToolbox(
   Y,
@@ -41,7 +41,7 @@ data = TempDisaggDGP(n_l=50,m=4,p=4,method='Chow-Lin',rho=0.5)
 X = data$X_Gen
 Y = data$Y_Gen
 fit_chowlin = TempDisaggToolbox(Y=Y,X=X,method='Chow-Lin')
-y_hat = fit_chowlin$y
+y_hat = fit_chowlin$y_Est
 }
 \references{
 \insertAllCited{}
