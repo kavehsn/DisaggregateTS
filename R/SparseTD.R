@@ -1,4 +1,4 @@
-#' High-dimensional temporal disaggregation  
+#' High-Dimensional Temporal Disaggregation  
 #'
 #' This function provides the Sparse Temporal Disaggregation (spTD) methods proposed by \insertCite{mosley2021sparse;textual}{DisaggregateTS}
 #' to perform temporal disaggregation of time series data in both standard and high-dimensional settings. Variable selection is also
@@ -9,6 +9,11 @@
 #' @param X       The high-frequency indicator matrix. 
 #' @param penalty Nominates the choice of regularisation ('lasso' or 'adalasso').
 #' @param aggMat  Aggregation matrix according to 'first', 'sum', 'average', 'last'. 
+#' @return y_Est  Estimated high-frequency response series.
+#' @return beta_Est Estimated coefficient vector.
+#' @return rho_Est  Estimated residual autocorrelation parameter. 
+#' @return ul_Est Estimated aggregate residual series.
+#' @return lambda Tuning parameter used for lasso/adalasso.
 #' @keywords Sparse Temporal Disaggregation Lasso Time Series Disaggregation
 #' @import lars 
 #' @export
@@ -146,7 +151,10 @@ SparseTD <- function(Y, X = matrix(data = rep(1, times = nrow(Y)), nrow = nrow(Y
       # Aggregate V
       V_l <- C %*% V %*% t(C)
       
-      yhat_final <- X %*% betahat_final + V %*% t(C) %*% solve(V_l) %*% (Y - X_l %*% betahat_final)
+      # Aggregate residual
+      u_l <- Y - X_l %*% betahat_final
+      
+      yhat_final <- X %*% betahat_final + V %*% t(C) %*% solve(V_l) %*% u_l
       
       # If adaptive lasso, do the following 
       if(penalty == 'adalasso') {
@@ -192,7 +200,10 @@ SparseTD <- function(Y, X = matrix(data = rep(1, times = nrow(Y)), nrow = nrow(Y
         betahat_final <- beta_refit[[min_bic_idx]]
         lambdahat_final <- lars.fit$lambda[min_bic_idx]
         
-        yhat_final <- X %*% betahat_final + V %*% t(C) %*% solve(V_l) %*% (Y - X_l %*% betahat_final)
+        # Aggregate residual
+        u_l = Y - X_l %*% betahat_final
+        
+        yhat_final <- X %*% betahat_final + V %*% t(C) %*% solve(V_l) %*% u_l
         
         
       }
@@ -202,7 +213,7 @@ SparseTD <- function(Y, X = matrix(data = rep(1, times = nrow(Y)), nrow = nrow(Y
     
   }   
   
-  output <- list('y' = yhat_final, 'beta' = betahat_final, 'rho' = rhohat_final, 'lambda' = lambdahat_final)
+  output <- list('y_Est' = yhat_final, 'beta_Est' = betahat_final, 'rho_Est' = rhohat_final, 'ul_Est' = u_l, 'lambda' = lambdahat_final)
   
   return(output)
   
