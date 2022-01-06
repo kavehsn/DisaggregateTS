@@ -8,6 +8,10 @@
 #' @param method 	Disaggregation using 'Denton', 'Denton-Cholette', 'Chow-Lin', 'Fernandez', 'Litterman'.
 #' @param aggMat 	Aggregation matrix according to 'first', 'sum', 'average', 'last'.
 #' @param Denton	The 'absolute', 'first', 'second' and 'proportional' difference Sigma for the Denton method. 
+#' @return y_Est	Estimated high-frequency response series.
+#' @return beta_Est	Estimated coefficient vector.
+#' @return rho_Est	Estimated residual autocorrelation parameter.
+#' @return ul_Est	Estimated aggregate residual series. 
 #' @keywords Denton Denton-Cholette Chow-Lin Fernandez Litterman temporal-disaggregation
 #' @import Matrix
 #' @export
@@ -366,7 +370,7 @@ TempDisaggToolbox <- function(Y, X = matrix(data = rep(1, times = nrow(Y)), nrow
 	}
 
 	data_list <- list(y, betaHat_opt, rho_opt, u_l)
-	names(data_list) <- c("y_Gen", "betaHat_Opt", "rho_Opt","u_Gen")
+	names(data_list) <- c("y_Est", "beta_Est", "rho_Est","ul_est")
 	
 	return(data_list)
 }
