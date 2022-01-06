@@ -23,15 +23,24 @@ TempDisaggToolbox(
 
 \item{Denton}{The 'absolute', 'first', 'second' and 'proportional' difference Sigma for the Denton method.}
 }
+\value{
+y_Est	Estimated high-frequency response series.
+
+beta_Est	Estimated coefficient vector.
+
+rho_Est	Estimated residual autocorrelation parameter.
+
+ul_Est	Estimated aggregate residual series.
+}
 \description{
 This function contains the movement preservation and regression-based low-dimensional temporal disaggregation methods proposed by \insertCite{denton1971adjustment;textual}{DisaggregateTS}, \insertCite{dagum2006benchmarking;textual}{DisaggregateTS}
 \insertCite{chow1971best;textual}{DisaggregateTS}, \insertCite{fernandez1981methodological;textual}{DisaggregateTS} and \insertCite{litterman1983random;textual}{DisaggregateTS}.
 }
 \examples{
-data = TempDisaggDGP(n_l = 10, m = 4, p = 4, method = 'Chow-Lin', aggMat = 'sum', mean_X = 0, sd_X = 1, sd_e = 1 , rho = 0.5)
+data = TempDisaggDGP(n_l=50,m=4,p=4,method='Chow-Lin',rho=0.5)
 X = data$X_Gen
 Y = data$Y_Gen
-fit_chowlin = TempDisaggToolbox(Y = Y, X = X, method = 'Chow-Lin', aggMat = 'sum')
+fit_chowlin = TempDisaggToolbox(Y=Y,X=X,method='Chow-Lin')
 y_hat = fit_chowlin$y
 }
 \references{

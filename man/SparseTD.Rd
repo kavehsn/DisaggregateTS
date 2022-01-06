@@ -2,7 +2,7 @@
 % Please edit documentation in R/SparseTD.R
 \name{SparseTD}
 \alias{SparseTD}
-\title{High-dimensional temporal disaggregation}
+\title{High-Dimensional Temporal Disaggregation}
 \usage{
 SparseTD(
   Y,
@@ -20,6 +20,17 @@ SparseTD(
 
 \item{aggMat}{Aggregation matrix according to 'first', 'sum', 'average', 'last'.}
 }
+\value{
+y_Est  Estimated high-frequency response series.
+
+beta_Est Estimated coefficient vector.
+
+rho_Est  Estimated residual autocorrelation parameter.
+
+ul_Est Estimated aggregate residual series.
+
+lambda Tuning parameter used for lasso/adalasso.
+}
 \description{
 This function provides the Sparse Temporal Disaggregation (spTD) methods proposed by \insertCite{mosley2021sparse;textual}{DisaggregateTS}
 to perform temporal disaggregation of time series data in both standard and high-dimensional settings. Variable selection is also
@@ -27,10 +38,10 @@ performed by a LASSO penalty \insertCite{tibshirani1996regression;textual}{Disag
 \insertCite{zou2006adaptive;textual}{DisaggregateTS}.
 }
 \examples{
-data = TempDisaggDGP(n_l = 10, m = 4, p = 4, beta = 0.5, sparsity = 0.5, method = 'Chow-Lin', aggMat = 'sum', mean_X = 0, sd_X = 1, sd_e = 1 , rho = 0.5)
+data = TempDisaggDGP(n_l=50,m=4,p=10,beta=3,sparsity=0.5,method='Chow-Lin',rho=0.5)
 X = data$X_Gen
 Y = data$Y_Gen
-fit_spTD = SparseTD(Y = Y, X = X, penalty = 'lasso', aggMat = 'sum')
+fit_spTD = SparseTD(Y=Y, X=X)
 y_hat = fit_spTD$y
 }
 \references{
