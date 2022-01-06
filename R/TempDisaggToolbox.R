@@ -1,4 +1,4 @@
-#' Low-dimensional temporal dissaggregation toolbox
+#' Low-Dimensional Temporal Disaggregation Toolbox
 #' 
 #' This function contains the movement preservation and regression-based low-dimensional temporal disaggregation methods proposed by \insertCite{denton1971adjustment;textual}{DisaggregateTS}, \insertCite{dagum2006benchmarking;textual}{DisaggregateTS}
 #' \insertCite{chow1971best;textual}{DisaggregateTS}, \insertCite{fernandez1981methodological;textual}{DisaggregateTS} and \insertCite{litterman1983random;textual}{DisaggregateTS}.
@@ -20,7 +20,7 @@
 #' X = data$X_Gen
 #' Y = data$Y_Gen
 #' fit_chowlin = TempDisaggToolbox(Y=Y,X=X,method='Chow-Lin')
-#' y_hat = fit_chowlin$y
+#' y_hat = fit_chowlin$y_Est
 #' @references
 #' \insertAllCited{}
 #' @importFrom Rdpack reprompt	

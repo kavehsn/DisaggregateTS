@@ -22,7 +22,7 @@
 #' X = data$X_Gen
 #' Y = data$Y_Gen
 #' fit_spTD = SparseTD(Y=Y, X=X)
-#' y_hat = fit_spTD$y
+#' y_hat = fit_spTD$y_Est
 #' @references 
 #' \insertAllCited{}
 #' @importFrom Rdpack reprompt

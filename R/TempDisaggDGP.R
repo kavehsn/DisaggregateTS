@@ -1,4 +1,4 @@
-#' High and low-frequency data generating processes
+#' High and Low-Frequency Data Generating Processes
 #' 
 #' This function generates the high-frequency \eqn{mn_l \times 1} response vector \eqn{y}, according to \eqn{y=X\beta+\epsilon}, where \eqn{X} is an \eqn{mn_l\times p} matrix of indicator
 #' series, and the \eqn{mn_l\times 1} coefficient vector may be sparse. The low-frequency \eqn{n_l\times 1} vector \eqn{Y} 
