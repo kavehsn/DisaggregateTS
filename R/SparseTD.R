@@ -28,7 +28,7 @@
 #' @importFrom Rdpack reprompt
 #' @importFrom stats lm rbinom rnorm
 #' 
-# edit
+
 
 ### SparseTD main function --------------------
 
