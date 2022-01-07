@@ -34,7 +34,7 @@
 #' @importFrom Rdpack reprompt
 #' @importFrom stats lm rbinom rnorm
 
-TempDisaggDGP <- function(n_l, m, p = 1, beta = 1, sparsity = 1, method = 'Denton-Cholette', aggMat = 'sum', rho = 0, mean_X = 0, sd_X = 1, sd_e = 1, simul = FALSE){
+TempDisaggDGP <- function(n_l, m, p = 1, beta = 1, sparsity = 1, method = 'Denton-Cholette', aggMat = 'sum', rho = 0, mean_X = 0, sd_X = 1, sd_e = 1, simul = FALSE, setSeed = 42){
 
 
 	if(rho >= 1 || rho <= -1){
@@ -47,7 +47,7 @@ TempDisaggDGP <- function(n_l, m, p = 1, beta = 1, sparsity = 1, method = 'Dento
 
 		if(simul == TRUE){
 
-			set.seed(42)
+			set.seed(setSeed)
 
 		}
 
@@ -97,7 +97,7 @@ TempDisaggDGP <- function(n_l, m, p = 1, beta = 1, sparsity = 1, method = 'Dento
 
 		if(simul == TRUE){
 
-			rm(.Random.seed, envir = globalenv())
+			rm(.Random.seed)
 
 		}
 
