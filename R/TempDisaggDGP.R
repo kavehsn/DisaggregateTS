@@ -17,6 +17,7 @@
 #' @param sd_X 		Standard deviation of the design matrix. Default is 1. 
 #' @param sd_e		Standard deviation of the errors. Default is 1. 
 #' @param simul     When 'TRUE' the design matrix and the coefficient vector are fixed.
+#' @param setSeed	The seed used when 'simul' is set to 'TRUE'. 
 #' @return y_Gen	Generated high-frequency response series.
 #' @return Y_Gen	Generated low-frequency response series.
 #' @return X_Gen	Generated high-frequency indicator series.
