@@ -16,7 +16,8 @@ TempDisaggDGP(
   mean_X = 0,
   sd_X = 1,
   sd_e = 1,
-  simul = FALSE
+  simul = FALSE,
+  setSeed = 42
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ TempDisaggDGP(
 \item{sd_e}{Standard deviation of the errors. Default is 1.}
 
 \item{simul}{When 'TRUE' the design matrix and the coefficient vector are fixed.}
+
+\item{setSeed}{The seed used when 'simul' is set to 'TRUE'.}
 }
 \value{
 y_Gen	Generated high-frequency response series.
