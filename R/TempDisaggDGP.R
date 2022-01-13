@@ -24,7 +24,7 @@
 #' @return Beta_Gen	Generated coefficient vector.
 #' @return e_Gen	Generated high-frequency residual series. 
 #' @keywords DGP sparse high-frequency low-frequency 
-#' @import zoo
+#' @import zoo withr
 #' @export
 #' @examples
 #' data = TempDisaggDGP(n_l=50, m=4, p=4, method='Chow-Lin', rho=0.5)
@@ -48,11 +48,13 @@ TempDisaggDGP <- function(n_l, m, p = 1, beta = 1, sparsity = 1, method = 'Dento
 
 		if(simul == TRUE){
 
-			set.seed(setSeed)
+			w <- with_seed(setSeed, matrix(data = rbinom(n = p, size = 1, prob = 0.5), ncol = 1))
+
+		}else{
+
+			w <- matrix(data = rbinom(n = p, size = 1, prob = 0.5), ncol = 1)			
 
 		}
-
-		w <- matrix(data = rbinom(n = p, size = 1, prob = 0.5), ncol = 1)
 
 		beta <- w*beta-(1-w)*beta
 
@@ -66,7 +68,15 @@ TempDisaggDGP <- function(n_l, m, p = 1, beta = 1, sparsity = 1, method = 'Dento
 
 				s <- round(sparsity*p)					
 
-				toReplace <- sample(p, size = s)
+				if(simul == TRUE){
+
+					toReplace <- with_seed(setSeed, sample(p, size = s))
+
+				}else{
+
+					toReplace <- sample(p, size = s)
+
+				}
 
 				beta <- replace(beta, list = toReplace, values = 0)
 
@@ -84,7 +94,15 @@ TempDisaggDGP <- function(n_l, m, p = 1, beta = 1, sparsity = 1, method = 'Dento
 
 				# Generate the random vector of indicator series.
 
-				X <- matrix(data = rnorm(n_l*m, mean = mean_X, sd = sd_X), ncol = 1)
+				if(simul == TRUE){
+
+					X <- with_seed(setSeed, matrix(data = rnorm(n_l*m, mean = mean_X, sd = sd_X), ncol = 1))
+
+				}else{
+
+					X <- matrix(data = rnorm(n_l*m, mean = mean_X, sd = sd_X), ncol = 1)
+
+				}
 
 			}
 
@@ -92,15 +110,17 @@ TempDisaggDGP <- function(n_l, m, p = 1, beta = 1, sparsity = 1, method = 'Dento
 
 			# Generate the random p-columned matrix of indicator series. 
 
-			X <- matrix(data = rnorm ((n_l*m) * p, mean = mean_X, sd = sd_X), ncol = p, nrow = n_l*m)
+			if(simul == TRUE){
 
-		}
+				X <- with_seed(setSeed, matrix(data = rnorm ((n_l*m) * p, mean = mean_X, sd = sd_X), ncol = p, nrow = n_l*m))
 
-		if(simul == TRUE){
+			}else{
 
-			rm(.Random.seed)
+				X <- matrix(data = rnorm ((n_l*m) * p, mean = mean_X, sd = sd_X), ncol = p, nrow = n_l*m)
 
-		}
+			}
+			
+		}	
 
 		if(method == 'Denton-Cholette'){
 
