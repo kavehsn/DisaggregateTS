@@ -1,0 +1,15 @@
+#' GHG Emissions and Financial Data for IBM
+#'
+#' This dataset contains time series data on greenhouse gas (GHG) emissions
+#' and financial variables for IBM covering the period from Q3 2005 to Q3 2021.
+#' It is designed for use in demonstrating temporal disaggregation and adaptive LASSO methods
+#' for estimating high-frequency GHG emissions from low-frequency data.
+#'
+#' @format A data frame with 68 rows (representing quarters) and 113 variables:
+#' \describe{
+#'   \item{time}{Numeric vector representing the time index, spanning from Q3 2005 to Q3 2021}
+#'   \item{GHG}{Numeric vector of annual greenhouse gas emissions for IBM, recorded annually and repeated quarterly}
+#'   \item{financial_variables}{A matrix or data frame of 112 financial variables, extracted from quarterly balance sheets, income statements, and cash flow statements for each company}
+#' }
+#' @source Original data collected from financial statements and GHG reports of IBM.
+"Data"

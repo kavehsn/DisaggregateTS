@@ -1,0 +1,104 @@
+---
+title: "Temporal Disaggregation of IBM's GHG Emissions"
+#author: "Your Name"
+#date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Temporal Disaggregation of IBM's GHG Emissions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+
+# Introduction
+
+In this vignette, we demonstrate how to use the **DisaggregateTS** package to perform temporal disaggregation of IBM's greenhouse gas (GHG) emissions data. The goal is to estimate quarterly GHG emissions based on annual data, leveraging high-frequency economic indicators.
+
+## Background
+
+By focusing on emissions per unit of economic output, carbon intensity accounts for the fact that larger organizations or economies may naturally produce more emissions simply due to scale. This allows for a fair comparison of sustainability performance across different entities, regardless of size.
+
+Accurate and timely carbon accounting and the development of robust measurement frameworks are essential for effective emission reduction strategies and the pursuit of sustainable development goals. While carbon accounting frameworks offer valuable insights into emissions quantification, they are not without limitations. One of those limitations is the frequency with which this information is released, generally at an annual frequency, while most companies’ economic indicators are made public on a quarterly basis. This is a perfect example in which temporal disaggregation can be used to bridge the gap between data availability and prompt economic and financial analyses.
+
+In this application, the variable of interest is the GHG emissions for IBM between Q3 2005 and Q3 2021, at annual frequency, resulting in 17 data points (i.e., \(\mathbf{Y} \in \mathbb{R}^{17}\)). For the high-frequency data, we used the balance sheet, income statement, and cash flow statement quarterly data between Q3 2005 and Q3 2021, resulting in 68 data points for the 112 variables (after filtering). We remove variables that have a pairwise correlation higher than 0.99, resulting in a filtered dataset with 112 variables (\(\mathbf{X} \in \mathbb{R}^{68 \times 112}\)).
+
+In this example, we employ the adaptive LASSO method (`method = "adaptive-spTD"`) to select the best variables that can be used to recover the high-frequency observations, and we apply the `aggMat = "first"` aggregation method.
+
+# Data Preparation
+
+We start by loading the required packages and data.
+
+
+```{r setup, message=FALSE, warning=FALSE}
+library(DisaggregateTS)
+```
+
+```{r}
+# Load the combined data from the package
+data(Data)
+
+# Extract Data_Y and Data_X from the combined data
+Data_Y <- Data$Data_Y
+Data_X <- Data$Data_X
+
+# Select IBM GHG data and dates for Q3 2005 - Q3 2021
+Dates <- Data_Y$Dates[c(7:23)]
+Y <- Data_Y$IBM[c(7:23)]
+Y <- as.matrix(as.numeric(Y))
+
+# HF data available from 12-2004 (observation 21) up to 09-2021 (observation 88)
+Dates_Q <- Data_X$Dates[c(21:88)]
+X <- Data_X[c(21:88),]
+X <- sapply(X, as.numeric)
+
+# Remove columns containing NAs
+X <- X[ , colSums(is.na(X))==0] 
+
+
+# Remove highly correlated variables (pairwise correlation >= 0.99)
+tmp <- cor(X)
+tmp[upper.tri(tmp)] <- 0
+diag(tmp) <- 0
+
+X2 <- X[, !apply(tmp, 2, function(x) any(abs(x) >= 0.99, na.rm = TRUE))]
+```
+
+# Temporal Disaggregation
+
+```{r}
+C_sparse <- disaggregate(
+  as.matrix(Y),
+  as.matrix(X2),
+  aggMat   = "sum",
+  aggRatio = 4,
+  method   = "adaptive-spTD")
+
+# Temporally disaggregated time series
+Y_HF <- C_sparse$y_Est
+```
+
+# Results
+
+```{r plot-results, fig.width=8, fig.height=5, echo=TRUE}
+par(mar = c(5, 6, 4, 5) + 0.1)  # Adjust margins for better spacing
+
+# Plot the temporal disaggregated data
+plot(Dates_Q, Y_HF, type = "b", pch = 19, ylab = "GHG emissions", xlab = "Time",
+     lwd = 2, cex.lab = 1.4, cex.axis = 1.2, main = "Temporal Disaggregation of GHG Emissions")
+
+# Add a legend with adjusted font size and position
+legend("bottomleft", inset = 0.05, 
+       legend = "Temporal disaggregated observations",
+       col = "black", lty = 1, lwd = 2, pch = 19, 
+       cex = 1.2, pt.cex = 1.2)
+```
