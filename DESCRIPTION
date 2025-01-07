@@ -23,7 +23,7 @@ Imports: Rdpack, stats, Matrix, lars, zoo, withr
 Suggests: testthat (>= 3.0.0), knitr, rmarkdown, readxl, corrplot, ggplot2
 RdMacros: Rdpack
 Config/testthat/edition: 3
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Depends: R (>= 3.5.0)
