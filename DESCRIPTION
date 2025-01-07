@@ -27,3 +27,5 @@ RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Depends: R (>= 3.5.0)
+URL: https://github.com/kavehsn/DisaggregateTS
+BugReports: https://github.com/kavehsn/DisaggregateTS/issues
